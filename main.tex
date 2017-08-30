@@ -1,0 +1,118 @@
+%!TEX program = xelatex
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+
+% 页边距设置
+\usepackage{geometry}
+\geometry{left=2.0cm,right=2.0cm,top=2.5cm,bottom=2.5cm}
+
+\title{alghorithm-minibook}
+\author{rainboy }
+\date{August 2017}
+
+\usepackage{lastpage}                % lastpage
+\usepackage{fancyhdr}  
+\pagestyle{fancy}                    % 设置页眉
+\lhead{page \thepage\ of \pageref{LastPage}}
+\chead{迷你算法書}
+\rhead{\small\leftmark}
+
+
+\usepackage[boldfont,slantfont,CJKchecksingle]{xeCJK} % 允许斜体和粗体
+\usepackage{tocloft}                         % 目录
+\renewcommand\contentsname{目录}
+\renewcommand{\today}{\number\year 年 \number\month 月 \number\day 日} % 中文日期
+
+
+
+\usepackage{natbib}
+\usepackage{graphicx}
+\usepackage{listings}
+\usepackage{fontspec,xunicode,xltxtra}
+\setmainfont[Ligatures=TeX]{DejaVu Sans Mono for Powerline Nerd Font Plus Font Awesome Plus Octicons Plus Pomicons Windows 
+Compatible.ttf}
+\usepackage{xeCJK}          %导入xeCJK包
+\setCJKmainfont{WenQuanYi Micro Hei.ttf}
+
+\usepackage{xcolor}
+\definecolor{CPPLight}  {HTML} {686868}
+\definecolor{CPPSteel}  {HTML} {888888}
+\definecolor{CPPDark}   {HTML} {262626}
+\definecolor{CPPBlue}   {HTML} {4172A3}
+\definecolor{CPPGreen}  {HTML} {487818}
+\definecolor{CPPBrown}  {HTML} {A07040}
+\definecolor{CPPRed}    {HTML} {AD4D3A}
+\definecolor{CPPViolet} {HTML} {7040A0}
+\definecolor{CPPGray}  {HTML} {B8B8B8}
+\lstset{
+    columns=fixed,       
+    numbers=left,                                        % 在左侧显示行号
+    frame=none,                                          % 不显示背景边框
+    backgroundcolor=\color[RGB]{245,245,244},            % 设定背景颜色
+    keywordstyle=\color[RGB]{40,40,255}\bfseries,        % 设定关键字颜色
+    numberstyle=\large\color{darkgray},           % 设定行号格式
+    commentstyle=\it\color[RGB]{0,96,96},                % 设置代码注释的格式
+    stringstyle=\rmfamily\slshape\color[RGB]{128,0,0},   % 设置字符串格式
+    showstringspaces=false,                              % 不显示字符串中的空格
+    language=c++,                                        % 设置语言
+    breaklines=true,                                     % 对过长的代码自动换行
+    breakautoindent=true, %
+    breakindent=4em, %
+    basicstyle=\Large,                                  % 主体字体大小
+    morekeywords={alignas,continute,friend,register,true,alignof,decltype,goto,
+    reinterpret_cast,try,asm,defult,if,return,typedef,auto,delete,inline,short,
+    typeid,bool,do,int,signed,typename,break,double,long,sizeof,union,case,
+    dynamic_cast,mutable,static,unsigned,catch,else,namespace,static_assert,using,
+    char,enum,new,static_cast,virtual,char16_t,char32_t,explict,noexcept,struct,
+    void,export,nullptr,switch,volatile,class,extern,operator,template,wchar_t,
+    const,false,private,this,while,constexpr,float,protected,thread_local,
+    const_cast,for,public,throw,std},
+}
+
+
+\begin{document}
+{\setmainfont{FOT-MatissePro-EB.otf}
+\maketitle
+}
+\newpage
+\tableofcontents
+\pagebreak
+
+
+\section{冒泡排序}
+
+\textbf{\underline{一句话算法:}} 数组下标从1开始,第一趟循环len-1次,第二趟循环len-2次,第i趟循环len-i次 
+
+\begin{lstlisting}
+int a[10]= {0,3,2,4,9,1,5,7,6,8};
+for(i=1;i<=n-1;i++)
+    for(j=1;j<=n-i;j++)
+       if(a[j] > a[j+1])   
+        tmp =a[j],a[j] =a[j+1],a[j+1]=tmp;
+\end{lstlisting}
+
+
+\section{快速排序}
+
+\begin{lstlisting}
+int a[]={6,2,7,3,8,9};
+void quicksort(int l,int r){
+    if( l <=r ){
+    int s=l,t=r;
+    int key =a[l]; // 取第一个值为key
+    while(s < t){
+        while( s <t && a[t] >= key) --t;// 如果a[t] >= key,t下标不停变小,直到a[t] < key
+        if(s < t) a[s++] = a[t];        //停下来的时候,看一看,是不是到中点,如果不是 交换值
+        while(s<t && a[s] <= key) ++s;  //如果a[s] <= key  s的下标不停变大,直到a[s] > key
+        if(s<t ) a[t--] = a[s];         //停下来的时候,看一看,是不是到了中点,如果不是,交换值
+    }
+    a[s] = key;                         //上面while停止的时候,一定是s ==t
+    quicksort(l,s-1);
+    quicksort(s+1,r);
+}
+}
+\end{lstlisting}
+
+
+\end{document}
+
