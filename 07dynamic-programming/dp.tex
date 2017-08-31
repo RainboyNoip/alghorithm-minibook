@@ -32,4 +32,98 @@ $$
 
 \subsubsection{最长不下降子序列LIS-$n^2$}
 
+\begin{lstlisting}
+int a[100];
+int f[100];
+int LIS(int n){
+    int i,j,ans=0;
+    for (i=1;i<=n;i\){
+        scanf("%d",&a[i]);
+        f[i]=1;
+    }
+    
+    for (i=2;i<=n;i++){
+        for (j=1;j<=i-1;j++){
+            if(a[i] > a[j])
+                f[j] = max(f[i],f[j]+1);
+        }
+    }
 
+    for (i=1;i<=n;i++){
+        if(f[i] > ans)
+            ans = f[x];
+    }
+    return ans;
+}
+\end{lstlisting}
+
+
+\textbf{二分查找法} $n \times logn$代码由Riolu(2014)提供
+
+\begin{lstlisting}
+int a[n],c[n],f[n],m;
+//a 为数组,f存最大长度
+//c是符合条件的最长非降序列
+//c[i]表示长度为i的LIS最小右端值
+
+memset(c,0x7f,siezof);
+
+int LIS(){
+    int i;
+    for(i=1;i<=n;i++){
+        int min=1,max=i;
+
+        while(min<max){     //寻找最大c[x],使c[x]<=a[i]
+            int mid  = (min+max)>>1;
+            if(c[mid] <= a[i])
+                min = mid+1;
+            else
+                max= mid;
+        }
+
+        f[i]=min;   //保有答案
+        c[min]=a[i];//更新最小值
+        return f[n];
+    }
+}
+\end{lstlisting}
+
+\subsubsection{最长公共子序列}
+
+\textbf{状态转移方程:}
+
+$$
+f(i,j) = 
+\left\{\begin{matrix}
+f(i-1,j)\\ 
+f(i,j-1)\\ 
+f(i-1,j-1)+a_i==b_j\ ?\ 1:0
+\end{matrix}\right.
+$$
+
+\begin{lstlisting}
+int f[1001][1001];
+
+int LCS(int *a,int m,int *b,int n){ // m,n分别是a,b中元素的个数
+    int i,j;
+    memset(f,0,sizeof(f));
+    for (i=1;i<=m;i++)
+    for (j=1;j<=n;j++){
+        if (a[i] == b[j]) f[i][j] = f[i-1][j-1]+1;
+        f[i][j] = max(f[i][j],max(f[i-1][j],f[i][j-1]));
+    }
+}
+\end{lstlisting}
+
+
+\subsection{区域型DP}
+
+\begin{itemize}
+    \item \textbf{特征:}能将问题分解成为两两合并的形式 
+    \item \textbf{合并:}意思就是将两个或多个部分进行整合,当然也可以反过来,也就是是将一个问题进行分解成两个或多个部分.
+    \item \textbf{求解:}对整个问题设最优值,\textbf{枚举合并点},将问题分解成为左右两个部分,最后将左右两个部分的最优值进行合并得到原问题的最优值。有点类似分治算法的解题思想。 
+    \item \textbf{典型试题:}整数划分,凸多边形划分、石子合并、多边形合并、能量项链等、数字游戏。
+    \item \textbf{特征:}能将问题分解成为两两合并的形式 
+\end{itemize}
+
+\subsubsection{石子合并}
