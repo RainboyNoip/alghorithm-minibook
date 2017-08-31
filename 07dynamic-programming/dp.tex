@@ -1,0 +1,35 @@
+\section{动态规化}
+
+\subsection{相关概念}
+
+一句话概念:\textbf{就是子问题状态的迁移过程}
+
+解法步骤:
+
+\begin{itemize}
+ \item 确定问题是DP
+ \item 想出所有的DP状态
+ \item 想出状态是如果迁移的:状态转移方程
+ \begin{itemize}
+ \item 状态的前趋很好找到--->递推的DP
+ \item 状态的前趋不好找到--->记忆化搜索
+ \end{itemize}
+\end{itemize}
+
+\subsection{线性DP}
+
+线型动态规划问题,最典型的特征就是状态都在一条线上,并且位置固定,问题一般都规定只能从前往后取状态,解决的办法是根据前面的状态特征,选取最优状态作为决策进行转移。 
+\begin{itemize}
+  \item 设前 i个点的最优值,研究前 i-1 个点与前 i个点的最优值, 
+  \item 利用第 i个点决策转移 
+\end{itemize}
+
+状态转移方程一般可写成:
+
+$$
+f_i(k) = min\left \{ f_{i-1}\ or\ j( k') + u(i,j)\ or\ u(i,i-1) \right \} 
+$$
+
+\subsubsection{最长不下降子序列LIS-$n^2$}
+
+

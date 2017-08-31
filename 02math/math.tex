@@ -1,0 +1,466 @@
+\section{数学相关}
+
+\subsection{GCD:欧几里得算法}
+
+\subsubsection{递归实现}
+\begin{lstlisting}
+int gcd(int a,int b){
+    if (b==0) return a;
+    return gcd(b, a%b);
+}
+\end{lstlisting}
+
+\subsubsection{非递归实现}
+\begin{lstlisting}
+int gcd(int a,int b){
+    int t;
+    while(b != 0){
+        t=a;a=b;b= t % b;
+    }
+    return a;
+}
+\end{lstlisting}
+
+\subsection{EX-GCG:拓展欧几里得算法}
+\begin{lstlisting}
+int ex_gcd(int a,int b,int c,int &x,int &y){
+    if(b == 0){
+        x=c/a;
+        y=0;
+        return a;
+    }
+    int ans = ex_gcd(b,a%b,c2,x,y);
+    int tmp =x;
+    x = y;
+    y = tmp -a/b*y;
+    return ans;
+}
+\end{lstlisting}
+
+\subsection{LCM:最小公倍数}
+\textbf{原理:}
+$$a \times b = lcm(a,b) \times gcd(a,b)$$
+\begin{lstlisting}
+int lcm(int a,int b){
+    /* 原理 a*b = lcm(a,b)*gcd(a,b) */
+    return (a / gcd(a,b) *b); //注意先 除
+}
+\end{lstlisting}
+
+\subsection{筛法求素数}
+\begin{lstlisting}
+#include <cstdio>
+#include <cstring>
+
+bool f[100000010];
+int su[100010];
+int sj,n=0,i,j;
+
+void ShaSuShu(){
+    memset(f,1,sizeof(f));
+    for (i=2;i<=sj;i++){ //筛选
+        if(f[i]){
+            for(j=i<<1;j<=sj;j+=i)
+                f[j] =false;
+        }
+    }
+    for (i=2;i<=sj;i++){
+        if( f[i]){
+            n++;
+            su[n]=i; //保存
+        }
+    }
+}
+
+int main(){
+    scanf("%d",&sj);
+    ShaSuShu();
+    int i;
+    for(i=1;i<=n;i++)
+        printf("%d ",su[i]);
+    return 0;
+}
+\end{lstlisting}
+
+\subsection{常用递推公式}
+
+\textbf{加法原理}:
+
+做一件事情，完成它可以有$n$类办法，在第一类办法中有$m_1$种不同的方法，在第二类办法中有$m_2$种不同的方法，……，在第$n$类办法中有mn种不同的方法。那么完成这件事共有$N=m1+m2+…+mn$种不同的方法。
+
+\textbf{乘法原理}:
+
+做一件事情，完成它需要分成n个步骤，做第一步有$m_1$种不同的方法，做第二步有$m_2$种不同的方法，……，做第n步有种$m_n$不同的方法，那么完成这件事有$N+m_1 \times m_2 \times … \times m_n$种不同的方法。
+
+\textbf{两个原理的区别}:
+
+一个与分类有关，一个与分步有关；加法原理是\textbf{分类完成}，乘法原理是\textbf{分步完成}。
+
+\subsection{排列组合}
+
+\subsubsection{排列}
+
+\textbf{概念:}
+
+
+从$n$个不同元素中，任取$m\times(m \leqslant n)$个元素按照一定的顺序排成一列，叫做从$n$个不同元素中取出$m$个元素的一个排列。
+
+\textbf{排列数:}
+从$n$个不同元素中取出$m(m\leqslant n)$个元素的所有排列的个数，叫做从$n$个不同元素中取出$m$个元素的排列数，用符号
+\textbf{计算公式:}
+
+$$A_n^m=n(n-1)(n-2)......(n-m+1)=\frac{n!}{(n-m)!}$$
+
+
+\subsubsection{组合}
+
+\textbf{概念:}
+
+从n个不同元素中，任取$m(m\leqslant n)$个元素并成一组，叫做从$n$个不同元素中取出$m$个元素的一个组合。
+
+ \textbf{组合数:}
+ 从$n$个不同元素中取出$m(m\leqslant n)$个元素的所有组合的个数，叫做从$n$个不同元素中取出$m$个元素的组合数，用符号$C_n^m$表示
+
+ \textbf{计算公式:}
+
+ $$C_n^m =\frac{ A_n^m}{m!}=\frac{n(n-1)(n-2)......(n-m+1)}{m!}=\frac{n!}{(n-m)!}$$
+
+\textbf{组合恒等式:}
+
+
+\begin{align}
+&C_n^m=C_n^{n-m}  \label{eq:rel1} \\
+&C_n^m=C_{n-1}^{m-1}+C_{n-1}^{m}  \label{eq:rel2} \\
+&C_n^n+C_{n+1}^n+C_{n+2}^n+...+C_{n+r}^n=C_{n+r+1}^{n+1} \label{eq:rel3} \\
+&C_n^0+C_n^1+C_n^2+...+C_n^n=2^n \label{eq:rel4} \\
+&C_n^0+C_n^2+C_n^4+...=C_n^1+C_n^3+C_n^5+...=2^{n-1} \label{eq:rel5} \\
+\end{align}
+
+
+\subsection{高中数学知识补充}
+
+ n个人围着一张圆桌坐在一起，共有(n－1)!种坐法。
+
+ 把r个相同的球放到n个不同颜色的盒子中去，共有$C_{n+r-1}^r$种方法
+
+ 从n个排成一排的数中取m个数，且数字之间互不相邻，共有$C_{n-m+1}^r$种取法
+
+\subsection{二项式定理}
+
+\textbf{公式:}
+
+$$(a+b)^n=C_n^0a^nb^0+C_n^1a^{n-1}b^1+......+C_n^ra^{n-r}b^r+......+C_n^na^{0}b^n$$
+
+其中$a^{n-r}b^r$的二项式系数为$C_n^r$
+
+\subsection{catalan 数列}
+
+\textbf{Catalan数列:}
+
+$$ 1,2,5,14,42,132,429……, $$
+
+\textbf{通项公式:}
+
+$$ h(n) = C_{2n}^{n} /(n+1)$$
+
+
+\textbf{应用:}
+
+01串, 出栈序列
+
+\subsection{鸽巢原理(抽屉原理)}
+
+ 简单形式：如果$n+1$个物体被放进$n$个盒子，那么至少有一个盒子包含两个或更多的物体。
+
+加强形式：令$q_1，q_2,...,q_n$为正整数。如果将$q_1+q2+...+qn-n+1$个物体放入$n$个盒子内，那么或者第一个盒子至少含有$q_1$个物体，或者第二个盒子至少含有$q_2$个物体，…，或者第n个盒子含有$q_n$个物体
+
+\textbf{推论1:}
+
+$m$只鸽子进$n$个巢，至少有一个巢里有$m/n$只鸽子
+
+\textbf{推论2:}
+
+$n(m-1)+1$只鸽子进n个巢，至少有一个巢内至少有m只鸽子。
+  - 推论3：若$m_1,m_2,...,m_n$是正整数，且$\frac{m_1+...+m_n}{n}>r-1$.则至少有一个不小于$r$。
+
+
+\subsection{容斥原理}
+
+公式复杂,随后给出
+
+\subsection{进制转换}
+
+\textbf{N进制转十进制(秦九韶算法)}
+
+\textbf{bit[]} 对应的N进制位
+
+\textbf{top}是\textbf{bit[]}最高位的下标,下标从0开始
+
+\begin{lstlisting}
+int convertFrom(int base,int *bit,int top){
+    int ans = 0;
+    for(int i =top;i>=0;i--){
+        ans*=base;
+        ans+=bit[i];
+    }
+    return ans;
+}
+\end{lstlisting}
+
+\textbf{十进制转K进制(短除法)}
+
+\textbf{bit[]} 对应的N进制位
+
+\textbf{top}是\textbf{bit[]}最高位的下标,下标从0开始
+
+\begin{lstlisting}
+void convertTo(int num,int base,int *bit,int &top){
+    top=-1;
+    do{
+        bit[++top] = num % base;//可以直接输出 num % base
+        num/=base;
+    }while(num>0);
+}
+\end{lstlisting}
+
+\subsection{组合相关算法}
+
+\subsubsection{加法递推-$O(n^2)$}
+
+\textbf{使用的公式:}
+
+$$C_{n}^{m} = C_{n-1}^{m-1}+C_{n-1}^{m}$$
+
+\textbf{边界:}
+$$
+C_n^0=C_n^n = 1
+$$
+
+这个也是二项式定理,杨辉三角
+
+\begin{lstlisting}
+int c[1001][1001]; //根据实际需要开数组,必要的时候彩高精度,
+                   //具体看 高精度组合
+............
+memset(c,0,sizeof(c));
+int i,j;
+c[0][0] =1; //边界
+for(i=1;i<=n;i++){
+    c[i][0] = 1;
+    for(j=1;j<=i;j++){
+        c[i][j] = c[i-1][j-1]+c[i-1][j];
+    }
+}
+\end{lstlisting}
+
+\subsubsection{乘法递推-$O(n)$}
+
+\begin{lstlisting}
+int c[1001]; //必要的时候使用组合高精
+.............
+c[0]=1;
+if( m >n-m) m = n-m;
+for(int i =1;i<=m;i++){
+    c[i] = (n-i+1)*c[i-1] / i;
+}
+\end{lstlisting}
+
+\subsubsection{一般组合的产生}
+
+从$n$个元素里取$m$个元素,有多少种取法,把所有的取法都输出
+
+一个合法的组合有这样的特点
+
+\textbf{排在后面的数字一定严格大于左面的数字}
+
+\begin{lstlisting}
+#include <cstdio>
+
+int n,m;
+
+int stack[10000];
+void print(){
+    int i;
+    for (i=1;i<=m;i++)
+        printf("%d ",stack[i]);
+    printf("\n");
+}
+void dfs(int depth,int p){
+    if(depth == m+1){
+        print();
+        return ;
+    }
+    int i;
+    /*  p+1 <= k <=n-(m-depth) */
+    for (i=p+1;i<=n-(m-depth);i++){
+        /* 由于后面的数一定比较前面的数大,不用标记 */
+        stack[depth]=i;
+        dfs(depth+1,i);
+    }
+
+}
+
+int main(){
+    scanf("%d%d",&n,&m);
+    dfs(1,0);
+    return 0;
+}
+\end{lstlisting}
+
+
+
+\subsubsection{全组合}
+
+有$n$个元素,求这$n$个数构成的集合的所有非空子集
+
+\begin{lstlisting}
+#include <cstdio>
+int n;
+int item[10001]={0};
+
+void full_combinatiom(int pos,int val){
+	int i;
+	/* i < pos pos代表正要选的位置,还没有选*/
+    for(i=1;i<pos;i++)//输出已有的值
+        printf("%d ",item[i]);//进入函数就输出
+    printf("\n");
+	
+    for(i=val;i<=n;i++){
+        item[pos] = i;
+		/*位置+1,当前可以选的最小值+1*/
+        full_combinatiom(pos+1,i+1);
+		
+    }
+}
+
+int main(){
+	
+	n = 3;
+	full_combinatiom(1,1);
+	return 0;
+}
+\end{lstlisting}
+
+
+
+可以用一个整数来表示一个集合或者组合,因为第一位不是0就是1:具体可以看容斥原理
+
+\subsubsection{由上一组合产生下一组合}
+
+从右边向左寻找可以往下取的元素的数,位置为j
+数列的j位到n位的重取元素
+右边的元素一定严格大于左侧的元素
+
+代码有可能错误,但是思想正确,因为没有验证
+
+\begin{lstlisting}
+int a[M];//a[i] 字典序的最小排序
+....
+
+int j =m-1;
+while((j >=0) && (a[j]==n-(m-1-j))) j--;
+if( i >=0){
+    a[j]++;
+    int k;
+    for(k=j+1;k<m;k++) 
+        a[k]=a[k-1]+1;
+}
+\end{lstlisting}
+
+
+
+\subsection{排列相关算法}
+
+\subsubsection{排列数的计算}
+
+根据数学公式:
+
+$$
+n!=n \times (n-1) \times (n-2) \times ......\times 1
+$$
+
+\begin{lstlisting}
+typedef long long LL;
+LL n,ans=1;
+scanf("%d",&ans);
+while(n !=0){
+    ans*=n;
+    n-=1;
+};
+\end{lstlisting}
+
+
+
+\subsubsection{全排列的产生}
+
+对数字\textbf{1-->n}进行排序,输出每一种排序方法
+
+当然是用DFS,对每个位置进行试探.
+
+\textbf{DFS原则:}
+
+\textbf{在某个位置下,选一个没有被选过的数,边界是n}
+
+\begin{lstlisting}
+#include <cstdio>
+int n;
+/* 0代表没有被使用过 */
+bool vis[10000]={0}; 
+/* 存数据 */
+int stack[10000];
+
+void print(){
+    int i;
+    for (i=1;i<=n;i++)
+        printf("%d ",stack[i]);
+    printf("\n");
+}
+
+void dfs(int depth){
+    if( depth == n+1){
+        print();
+        return ;
+    }
+    int i;
+    for (i=1;i<=n;i++){
+        if( vis[i] == 0){//如果这个数没有用过,就用
+            vis[i] = 1;
+            stack[depth]=i;
+			dfs(depth+1);
+            vis[i] = 0; //设为没有用过,还可以给其它位置用
+        }
+    }
+}
+
+int main(){
+    scanf("%d",&n);
+    dfs(1);
+	return 0;
+}
+\end{lstlisting}
+
+\subsubsection{由上一个排列产生下一个排列}
+
+1. 从右往左寻找第一个小于右边的数,位置j.
+2. 在是位置上的右边寻找大于$a_j$r的最小数字$a_k$
+3. 将$a_j$与$a_k$的值进行交换
+4. 将数列的$j+1$位到$n$倒转
+
+代码没有验证
+
+\begin{lstlisting}
+int a[N];
+int j,k,p,q,temp;
+
+j=(n-1)-1;
+while(( j<=0) && (a[j]>a[j+1])) j--;
+
+if(j >=0){
+    k=n-1;
+    while(a[k] < a[j]) k--;
+    swap(a[j],a[k]);
+    for(p=j+1,q=n-1;p<q;p++,q--){
+        swap(a[p],a[q]);
+    }
+}
+\end{lstlisting}

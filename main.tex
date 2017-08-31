@@ -1,250 +1,29 @@
 %!TEX program = xelatex
 \documentclass{article}
-\usepackage[utf8]{inputenc}
-
-% 页边距设置
-\usepackage{geometry}
-\geometry{left=2.0cm,right=2.0cm,top=2.5cm,bottom=2.5cm}
-
-\title{alghorithm-minibook}
-\author{rainboy }
-\date{August 2017}
-
-\usepackage{lastpage}                % lastpage
-\usepackage{fancyhdr}  
-\pagestyle{fancy}                    % 设置页眉
-\lhead{page \thepage\ of \pageref{LastPage}}
-\chead{迷你算法書}
-\rhead{\small\leftmark}
-
-
-\usepackage[boldfont,slantfont,CJKchecksingle]{xeCJK} % 允许斜体和粗体
-\usepackage{tocloft}                         % 目录
-\renewcommand\contentsname{目录}
-\renewcommand{\today}{\number\year 年 \number\month 月 \number\day 日} % 中文日期
-
-
-
-\usepackage{natbib}
-\usepackage{graphicx}
-\usepackage{listings}
-\usepackage{fontspec,xunicode,xltxtra}
-\setmainfont[Ligatures=TeX]{DejaVu Sans Mono for Powerline Nerd Font Plus Font Awesome Plus Octicons Plus Pomicons Windows 
-Compatible.ttf}
-\usepackage{xeCJK}          %导入xeCJK包
-\setCJKmainfont{WenQuanYi Micro Hei.ttf}
-
-\usepackage{xcolor}
-\definecolor{CPPLight}  {HTML} {686868}
-\definecolor{CPPSteel}  {HTML} {888888}
-\definecolor{CPPDark}   {HTML} {262626}
-\definecolor{CPPBlue}   {HTML} {4172A3}
-\definecolor{CPPGreen}  {HTML} {487818}
-\definecolor{CPPBrown}  {HTML} {A07040}
-\definecolor{CPPRed}    {HTML} {AD4D3A}
-\definecolor{CPPViolet} {HTML} {7040A0}
-\definecolor{CPPGray}  {HTML} {B8B8B8}
-\lstset{
-    columns=fixed,       
-    numbers=left,                                        % 在左侧显示行号
-    frame=none,                                          % 不显示背景边框
-    backgroundcolor=\color[RGB]{245,245,244},            % 设定背景颜色
-    keywordstyle=\color[RGB]{40,40,255}\bfseries,        % 设定关键字颜色
-    numberstyle=\large\color{darkgray},           % 设定行号格式
-    commentstyle=\it\color[RGB]{0,96,96},                % 设置代码注释的格式
-    stringstyle=\rmfamily\slshape\color[RGB]{128,0,0},   % 设置字符串格式
-    showstringspaces=false,                              % 不显示字符串中的空格
-    language=c++,                                        % 设置语言
-    breaklines=true,                                     % 对过长的代码自动换行
-    breakautoindent=true, %
-    breakindent=4em, %
-    basicstyle=\large,                                   % 主体字体大小
-    morekeywords={alignas,continute,friend,register,true,alignof,decltype,goto,
-    reinterpret_cast,try,asm,defult,if,return,typedef,auto,delete,inline,short,
-    typeid,bool,do,int,signed,typename,break,double,long,sizeof,union,case,
-    dynamic_cast,mutable,static,unsigned,catch,else,namespace,static_assert,using,
-    char,enum,new,static_cast,virtual,char16_t,char32_t,explict,noexcept,struct,
-    void,export,nullptr,switch,volatile,class,extern,operator,template,wchar_t,
-    const,false,private,this,while,constexpr,float,protected,thread_local,
-    const_cast,for,public,throw,std},
-}
-\usepackage{ctex}                                       %段首空两格
+% 文档的相关设定
+\input{style}
+% 标题,作者,日期
+\input{info}    
 
 \begin{document}
+
 {\setmainfont{FOT-MatissePro-EB.otf}
 \maketitle
 }
+
 \newpage
 \tableofcontents
 \pagebreak
 
 
-\section{冒泡排序}
+\include{01sort/sort}
 
-\textbf{\underline{一句话算法:}} 数组下标从1开始,第一趟循环len-1次,第二趟循环len-2次,第i趟循环len-i次 
+\include{02math/math}
 
-\begin{lstlisting}
-int a[10]= {0,3,2,4,9,1,5,7,6,8};
-for(i=1;i<=n-1;i++)
-    for(j=1;j<=n-i;j++)
-       if(a[j] > a[j+1])   
-        tmp =a[j],a[j] =a[j+1],a[j+1]=tmp;
-\end{lstlisting}
+\include{03high-precision/high-precision}
 
-\section{归并排序}
+\include{04greed/greed}
 
-归并排序可以求逆序对:\textbf{火柴棒排序}
-\textbf{归并排序的交换次数就是这个数组的逆序对个数}
-
-\begin{lstlisting}
-int a[] ={1,7,3,6,5,2};
-int tmp[100]; //临时存储的中间数组
-
-void merge_sort(int s,int t){
-    int mid,i,j,k;
-    if(s==t) return ; //如果区间只有一个数,就返回
-    mid = (s+t)>>1; //取中间的点
-    merge_sort(s,mid);
-    merge_sort(mid+1,t);
-
-    i=s;
-    j=mid+1;
-    k=s;
-
-    while(i<=mid && j<=t){
-        if( a[i] <=a[j]){
-            tmp[k]=a[i];k++;i++;
-        } else {
-            tmp[k]=a[j];j++;k++;
-        }
-    }
-
-    while(i<=mid) { tmp[k]=a[i];k++;i++;};
-    while(j<=t)   { tmp[k]=a[j];k++;j++;};
-
-    for(i=s;i<=t;i++)
-        a[i]=tmp[i];
-}
-\end{lstlisting}
-
-
-
-\section{★快速排序}
-
-\begin{lstlisting}
-int a[]={6,2,7,3,8,9};
-void quicksort(int l,int r){
-    if( l <=r ){
-    int s=l,t=r;
-    int key =a[l]; // 取第一个值为key
-    while(s < t){
-        while( s <t && a[t] >= key) --t;// 如果a[t] >= key,t下标不停变小,直到a[t] < key
-        if(s < t) a[s++] = a[t];        //停下来的时候,看一看,是不是到中点,如果不是 交换值
-        while(s<t && a[s] <= key) ++s;  //如果a[s] <= key  s的下标不停变大,直到a[s] > key
-        if(s<t ) a[t--] = a[s];         //停下来的时候,看一看,是不是到了中点,如果不是,交换值
-    }
-    a[s] = key;                         //上面while停止的时候,一定是s ==t
-    quicksort(l,s-1);
-    quicksort(s+1,r);
-}
-}
-\end{lstlisting}
-
-\section{GCD:欧几里得算法}
-
-\subsection{递归实现}
-\begin{lstlisting}
-int gcd(int a,int b){
-    if (b==0) return a;
-    return gcd(b, a%b);
-}
-\end{lstlisting}
-
-\subsection{非递归实现}
-\begin{lstlisting}
-int gcd(int a,int b){
-    int t;
-    while(b != 0){
-        t=a;a=b;b= t % b;
-    }
-    return a;
-}
-\end{lstlisting}
-
-\section{EX-GCG:拓展欧几里得算法}
-\begin{lstlisting}
-int ex_gcd(int a,int b,int c,int &x,int &y){
-    if(b == 0){
-        x=c/a;
-        y=0;
-        return a;
-    }
-    int ans = ex_gcd(b,a%b,c2,x,y);
-    int tmp =x;
-    x = y;
-    y = tmp -a/b*y;
-    return ans;
-}
-\end{lstlisting}
-
-\section{LCM:最小公倍数}
-\textbf{原理:}
-$$a \times b = lcm(a,b) \times gcd(a,b)$$
-\begin{lstlisting}
-int lcm(int a,int b){
-    /* 原理 a*b = lcm(a,b)*gcd(a,b) */
-    return (a / gcd(a,b) *b); //注意先 除
-}
-\end{lstlisting}
-
-\section{筛法求素数}
-\begin{lstlisting}
-#include <cstdio>
-#include <cstring>
-
-bool f[100000010];
-int su[100010];
-int sj,n=0,i,j;
-
-void ShaSuShu(){
-    memset(f,1,sizeof(f));
-    for (i=2;i<=sj;i++){ //筛选
-        if(f[i]){
-            for(j=i<<1;j<=sj;j+=i)
-                f[j] =false;
-        }
-    }
-    for (i=2;i<=sj;i++){
-        if( f[i]){
-            n++;
-            su[n]=i; //保存
-        }
-    }
-}
-
-int main(){
-    scanf("%d",&sj);
-    ShaSuShu();
-    int i;
-    for(i=1;i<=n;i++)
-        printf("%d ",su[i]);
-    return 0;
-}
-\end{lstlisting}
-
-
-\section{常用递推公式}
-
-\textbf{加法原理}:
-
-做一件事情，完成它可以有$n$类办法，在第一类办法中有$m_1$种不同的方法，在第二类办法中有$m_2$种不同的方法，……，在第$n$类办法中有mn种不同的方法。那么完成这件事共有$N=m1+m2+…+mn$种不同的方法。
-
-\textbf{乘法原理}:
-
-做一件事情，完成它需要分成n个步骤，做第一步有$m_1$种不同的方法，做第二步有$m_2$种不同的方法，……，做第n步有种$m_n$不同的方法，那么完成这件事有$N+m_1 \times m_2 \times … \times m_n$种不同的方法。
-
-\textbf{两个原理的区别}:
-
-一个与分类有关，一个与分步有关；加法原理是\textbf{分类完成}，乘法原理是\textbf{分步完成}。
-
+\include{05search/search}
+\include{07dynamic-programming/dp}
 \end{document}

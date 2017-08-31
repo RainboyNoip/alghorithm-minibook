@@ -1,0 +1,142 @@
+\section{数学相关}
+
+\subsection{常用递推公式}
+
+\textbf{加法原理}:
+
+做一件事情，完成它可以有$n$类办法，在第一类办法中有$m_1$种不同的方法，在第二类办法中有$m_2$种不同的方法，……，在第$n$类办法中有mn种不同的方法。那么完成这件事共有$N=m1+m2+…+mn$种不同的方法。
+
+\textbf{乘法原理}:
+
+做一件事情，完成它需要分成n个步骤，做第一步有$m_1$种不同的方法，做第二步有$m_2$种不同的方法，……，做第n步有种$m_n$不同的方法，那么完成这件事有$N+m_1 \times m_2 \times … \times m_n$种不同的方法。
+
+\textbf{两个原理的区别}:
+
+一个与分类有关，一个与分步有关；加法原理是\textbf{分类完成}，乘法原理是\textbf{分步完成}。
+
+\subsection{排列组合}
+
+\subsubsection{排列}
+
+\textbf{概念:}
+
+
+从$n$个不同元素中，任取$m\times(m \leqslant n)$个元素按照一定的顺序排成一列，叫做从$n$个不同元素中取出$m$个元素的一个排列。
+
+\textbf{排列数:}
+从$n$个不同元素中取出$m(m\leqslant n)$个元素的所有排列的个数，叫做从$n$个不同元素中取出$m$个元素的排列数，用符号
+\textbf{计算公式:}
+
+$$A_n^m=n(n-1)(n-2)......(n-m+1)=\frac{n!}{(n-m)!}$$
+
+
+\subsubsection{组合}
+
+\textbf{概念:}
+
+从n个不同元素中，任取$m(m\leqslant n)$个元素并成一组，叫做从$n$个不同元素中取出$m$个元素的一个组合。
+
+ \textbf{组合数:}
+ 从$n$个不同元素中取出$m(m\leqslant n)$个元素的所有组合的个数，叫做从$n$个不同元素中取出$m$个元素的组合数，用符号$C_n^m$表示
+
+ \textbf{计算公式:}
+
+ $$C_n^m =\frac{ A_n^m}{m!}=\frac{n(n-1)(n-2)......(n-m+1)}{m!}=\frac{n!}{(n-m)!}$$
+
+\textbf{组合恒等式:}
+
+
+\begin{align}
+&C_n^m=C_n^{n-m}  \label{eq:rel1} \\
+&C_n^m=C_{n-1}^{m-1}+C_{n-1}^{m}  \label{eq:rel2} \\
+&C_n^n+C_{n+1}^n+C_{n+2}^n+...+C_{n+r}^n=C_{n+r+1}^{n+1} \label{eq:rel3} \\
+&C_n^0+C_n^1+C_n^2+...+C_n^n=2^n \label{eq:rel4} \\
+&C_n^0+C_n^2+C_n^4+...=C_n^1+C_n^3+C_n^5+...=2^{n-1} \label{eq:rel5} \\
+\end{align}
+
+
+\subsection{高中数学知识补充}
+
+ n个人围着一张圆桌坐在一起，共有(n－1)!种坐法。
+
+ 把r个相同的球放到n个不同颜色的盒子中去，共有$C_{n+r-1}^r$种方法
+
+ 从n个排成一排的数中取m个数，且数字之间互不相邻，共有$C_{n-m+1}^r$种取法
+
+\subsection{二项式定理}
+
+\textbf{公式:}
+
+$$(a+b)^n=C_n^0a^nb^0+C_n^1a^{n-1}b^1+......+C_n^ra^{n-r}b^r+......+C_n^na^{0}b^n$$
+
+其中$a^{n-r}b^r$的二项式系数为C_n^r$
+
+\subsection{catalan 数列}
+
+\textbf{Catalan数列:}
+
+$$ 1,2,5,14,42,132,429……, $$
+
+\textbf{通项公式:}
+
+$$ h(n) = C_{2n}^{n} /(n+1)$$
+
+
+\textbf{应用:}
+
+01串, 出栈序列
+
+\subsection{鸽巢原理(抽屉原理)}
+
+ 简单形式：如果$n+1$个物体被放进$n$个盒子，那么至少有一个盒子包含两个或更多的物体。
+
+加强形式：令$q_1，q_2,...,q_n$为正整数。如果将$q_1+q2+...+qn-n+1$个物体放入$n$个盒子内，那么或者第一个盒子至少含有$q_1$个物体，或者第二个盒子至少含有$q_2$个物体，…，或者第n个盒子含有$q_n$个物体
+
+\textbf{推论1:}
+
+$m$只鸽子进$n$个巢，至少有一个巢里有$m/n$只鸽子
+
+\textbf{推论2:}
+
+$n(m-1)+1$只鸽子进n个巢，至少有一个巢内至少有m只鸽子。
+  - 推论3：若$m_1,m_2,...,m_n$是正整数，且$\frac{m_1+...+m_n}{n}>r-1$.则至少有一个不小于$r$。
+
+
+\subsection{容斥原理}
+
+公式复杂,随后给出
+
+\subsection{进制转换}
+
+\textbf{N进制转十进制(秦九韶算法)}
+
+\textbf{bit[]} 对应的N进制位
+
+\textbf{top}是\textbf{bit[]}最高位的下标,下标从0开始
+
+\begin{lstlisting}
+int convertFrom(int base,int *bit,int top){
+    int ans = 0;
+    for(int i =top;i>=0;i--){
+        ans*=base;
+        ans+=bit[i];
+    }
+    return ans;
+}
+\end{lstlisting}
+
+\textbf{十进制转K进制(短除法)}
+
+\textbf{bit[]} 对应的N进制位
+
+\textbf{top}是\textbf{bit[]}最高位的下标,下标从0开始
+
+\begin{lstlisting}
+void convertTo(int num,int base,int *bit,int &top){
+    top=-1;
+    do{
+        bit[++top] = num % base;//可以直接输出 num % base
+        num/=base;
+    }while(num>0);
+}
+\end{lstlisting}
